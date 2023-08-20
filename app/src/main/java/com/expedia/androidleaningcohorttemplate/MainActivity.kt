@@ -22,6 +22,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        pokemonViewModel.getPokemons()
         setContent {
             AndroidLeaningCohortTemplateTheme {
                 // A surface container using the 'background' color from the theme
@@ -29,18 +30,17 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    pokemonViewModel.getPokemons()
-                    PokemonScreen(pokemonViewModel.pokemonList.value)
+                    PokemonScreen(pokemonViewModel)
                 }
             }
         }
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    AndroidLeaningCohortTemplateTheme {
-        PokemonScreen(listOf())
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun GreetingPreview() {
+//    AndroidLeaningCohortTemplateTheme {
+//        PokemonScreen(PokemonViewModel())
+//    }
+//}

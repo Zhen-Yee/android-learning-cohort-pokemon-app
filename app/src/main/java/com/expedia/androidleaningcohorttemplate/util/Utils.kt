@@ -4,6 +4,10 @@ import com.expedia.androidleaningcohorttemplate.data.model.Pokemon
 import com.expedia.androidleaningcohorttemplate.data.model.PokemonDTO
 import com.expedia.androidleaningcohorttemplate.data.model.PokemonNameDTO
 
+const val DEFAULT_LIMIT = 20
+const val DEFAULT_OFFSET = 0
+const val TOTAL_POKEMON_COUNT = 1281
+
 fun PokemonDTO.toPokemons(): List<Pokemon> {
     return this.results.map {
         val pokemonId = it.extractPokemonId()

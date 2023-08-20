@@ -20,6 +20,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -29,14 +31,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.expedia.androidleaningcohorttemplate.data.model.Pokemon
+import com.expedia.androidleaningcohorttemplate.util.TOTAL_POKEMON_COUNT
 import com.expedia.androidleaningcohorttemplate.util.capitalize
+import com.expedia.androidleaningcohorttemplate.viewmodel.PokemonViewModel
 
 @Composable
-fun PokemonScreen(pokemons: List<Pokemon>) {
+fun PokemonScreen(viewModel: PokemonViewModel) {
     Surface(
         color = MaterialTheme.colorScheme.background,
         modifier = Modifier.fillMaxSize()
     ) {
+        val pokemons by remember { viewModel.pokemonList }
+
         Column {
             Spacer(modifier = Modifier.height(20.dp))
             Text(
@@ -52,12 +58,11 @@ fun PokemonScreen(pokemons: List<Pokemon>) {
                     .padding(8.dp)
             ) {
                 itemsIndexed(pokemons) { index, pokemon ->
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        PokemonCard(pokemon = pokemon)
+                    if (index >= pokemons.size - 1 && index <= TOTAL_POKEMON_COUNT) {
+                        println(index)
+                        viewModel.getNextPokemons()
                     }
+                    PokemonCard(pokemon = pokemon)
                 }
             }
         }
