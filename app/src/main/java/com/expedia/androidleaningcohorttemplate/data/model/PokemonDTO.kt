@@ -11,3 +11,9 @@ data class PokemonNameDTO(
     val name: String,
     val url: String
 )
+
+data class PokemonDetailsDTO(
+    val id: Int,
+    val height: Int,
+    val weight: Int
+)
