@@ -29,14 +29,19 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.expedia.androidleaningcohorttemplate.data.model.Pokemon
+import com.expedia.androidleaningcohorttemplate.navigation.PokemonScreens
 import com.expedia.androidleaningcohorttemplate.util.TOTAL_POKEMON_COUNT
 import com.expedia.androidleaningcohorttemplate.util.capitalize
 import com.expedia.androidleaningcohorttemplate.viewmodel.PokemonViewModel
 
 @Composable
-fun PokemonScreen(viewModel: PokemonViewModel) {
+fun PokemonScreen(
+    viewModel: PokemonViewModel,
+    navController: NavController
+) {
     Surface(
         color = MaterialTheme.colorScheme.background,
         modifier = Modifier.fillMaxSize()
@@ -62,7 +67,7 @@ fun PokemonScreen(viewModel: PokemonViewModel) {
                         println(index)
                         viewModel.getNextPokemons()
                     }
-                    PokemonCard(pokemon = pokemon)
+                    PokemonCard(pokemon = pokemon, navController = navController)
                 }
             }
         }
@@ -70,14 +75,19 @@ fun PokemonScreen(viewModel: PokemonViewModel) {
 }
 
 @Composable
-fun PokemonCard(pokemon: Pokemon) {
+fun PokemonCard(
+    pokemon: Pokemon,
+    navController: NavController
+) {
     Box(
         modifier = Modifier
             .shadow(5.dp, RoundedCornerShape(10.dp))
             .clip(RoundedCornerShape(10.dp))
             .aspectRatio(1f)
             .clickable {
-                // todo
+                navController.navigate(PokemonScreens.PokemonDetailsScreen.name)
+                // todo navController
+                // navigate to details screen
             }
     ) {
         Column {

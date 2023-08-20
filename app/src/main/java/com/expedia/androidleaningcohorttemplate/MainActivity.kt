@@ -7,10 +7,8 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.expedia.androidleaningcohorttemplate.ui.screens.PokemonScreen
+import com.expedia.androidleaningcohorttemplate.navigation.PokemonNavigation
 import com.expedia.androidleaningcohorttemplate.ui.theme.AndroidLeaningCohortTemplateTheme
 import com.expedia.androidleaningcohorttemplate.viewmodel.PokemonViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,7 +28,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    PokemonScreen(pokemonViewModel)
+                    PokemonNavigation(viewModel = pokemonViewModel)
                 }
             }
         }
