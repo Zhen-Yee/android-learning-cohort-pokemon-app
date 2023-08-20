@@ -39,6 +39,6 @@ class MainActivity : ComponentActivity() {
 //@Composable
 //fun GreetingPreview() {
 //    AndroidLeaningCohortTemplateTheme {
-//        PokemonScreen(PokemonViewModel())
+//        PokemonDetailsScreen(navController = null as NavController)
 //    }
 //}
