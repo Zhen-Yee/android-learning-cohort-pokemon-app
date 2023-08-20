@@ -94,6 +94,12 @@ fun PokemonCard(pokemon: Pokemon) {
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth()
             )
+            Text(
+                text = "#${pokemon.id}",
+                fontFamily = FontFamily.Serif,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth()
+            )
         }
     }
 }
