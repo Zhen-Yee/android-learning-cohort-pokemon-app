@@ -17,8 +17,8 @@ interface PokemonAPI {
         @Query("offset") offset: Int? = DEFAULT_OFFSET
     ): Call<PokemonDTO>
 
-    @GET("/pokemon/{name}")
+    @GET("pokemon/{id}")
     fun getPokemon(
-        @Path("name") name: String
+        @Path("id") id: String
     ): Call<PokemonDetailsDTO>
 }

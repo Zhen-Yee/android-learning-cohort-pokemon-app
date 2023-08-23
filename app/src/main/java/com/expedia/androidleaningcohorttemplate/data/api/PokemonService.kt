@@ -24,9 +24,9 @@ class PokemonService @Inject constructor(
         }
     }
 
-    suspend fun getPokemon(name: String): PokemonDetailsDTO? {
+    suspend fun getPokemonDetailsById(id: String): PokemonDetailsDTO? {
         return try {
-            val response = pokemonAPI.getPokemon(name).execute().body()
+            val response = pokemonAPI.getPokemon(id).execute().body()
             Log.d("PokemonService", Gson().toJson(response))
             response
         } catch (e: Exception) {

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.expedia.androidleaningcohorttemplate.data.api.PokemonService
 import com.expedia.androidleaningcohorttemplate.data.model.Pokemon
+import com.expedia.androidleaningcohorttemplate.data.model.PokemonDetailsDTO
 import com.expedia.androidleaningcohorttemplate.util.DEFAULT_LIMIT
 import com.expedia.androidleaningcohorttemplate.util.DEFAULT_OFFSET
 import com.expedia.androidleaningcohorttemplate.util.toPokemons
@@ -21,6 +22,7 @@ class PokemonViewModel @Inject constructor(
     var pokemonList = mutableStateOf<List<Pokemon>>(listOf())
     var currentPage = 1
     val currentOffset = DEFAULT_OFFSET
+    var pokemonDetailsMap = mutableStateOf(mutableMapOf<String, PokemonDetailsDTO>())
 
     fun getPokemons(limit: Int? = DEFAULT_LIMIT, offset: Int? = DEFAULT_OFFSET) {
         viewModelScope.launch(Dispatchers.Default) {
@@ -31,8 +33,11 @@ class PokemonViewModel @Inject constructor(
 
     fun getNextPokemons() {
         viewModelScope.launch(Dispatchers.Default) {
-            val pokemons = pokemonService
-                .getPokemons(DEFAULT_LIMIT, currentOffset + (DEFAULT_LIMIT * currentPage))
+            val pokemons = pokemonService.getPokemons(
+                limit = DEFAULT_LIMIT,
+                offset = currentOffset + (DEFAULT_LIMIT * currentPage)
+            )
+
             if (pokemons == null) {
                 throw Exception("Error while fetching next pokemons")
             } else {
@@ -42,9 +47,17 @@ class PokemonViewModel @Inject constructor(
         }
     }
 
-    fun getPokemon(name: String) {
-        viewModelScope.launch(Dispatchers.Default) {
-            pokemonService.getPokemon(name)
+    fun getPokemonDetailsById(id: String) {
+        if (!pokemonDetailsMap.value.contains(id)) {
+            viewModelScope.launch(Dispatchers.Default) {
+                val pokemonDetails = pokemonService.getPokemonDetailsById(id)
+
+                if (pokemonDetails == null) {
+                    throw Exception("Error while fetching pokemon details")
+                } else {
+                    pokemonDetailsMap.value[id] = pokemonDetails
+                }
+            }
         }
     }
 }

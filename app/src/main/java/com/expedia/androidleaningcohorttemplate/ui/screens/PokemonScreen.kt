@@ -64,10 +64,13 @@ fun PokemonScreen(
             ) {
                 itemsIndexed(pokemons) { index, pokemon ->
                     if (index >= pokemons.size - 1 && index <= TOTAL_POKEMON_COUNT) {
-                        println(index)
                         viewModel.getNextPokemons()
                     }
-                    PokemonCard(pokemon = pokemon, navController = navController)
+                    PokemonCard(
+                        viewModel = viewModel,
+                        pokemon = pokemon,
+                        navController = navController
+                    )
                 }
             }
         }
@@ -76,6 +79,7 @@ fun PokemonScreen(
 
 @Composable
 fun PokemonCard(
+    viewModel: PokemonViewModel,
     pokemon: Pokemon,
     navController: NavController
 ) {
@@ -85,9 +89,8 @@ fun PokemonCard(
             .clip(RoundedCornerShape(10.dp))
             .aspectRatio(1f)
             .clickable {
-                navController.navigate(PokemonScreens.PokemonDetailsScreen.name)
-                // todo navController
-                // navigate to details screen
+                viewModel.getPokemonDetailsById(pokemon.id)
+                navController.navigate("${PokemonScreens.PokemonDetailsScreen.name}/${pokemon.id}")
             }
     ) {
         Column {

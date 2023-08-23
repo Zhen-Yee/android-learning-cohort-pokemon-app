@@ -18,6 +18,7 @@ fun PokemonDTO.toPokemons(): List<Pokemon> {
         )
     }
 }
+// TODO PokemonDetailsDTO to PokemonDetails?
 
 fun PokemonNameDTO.extractPokemonId(): String {
     val arr = this.url.dropLast(1).split("/")
