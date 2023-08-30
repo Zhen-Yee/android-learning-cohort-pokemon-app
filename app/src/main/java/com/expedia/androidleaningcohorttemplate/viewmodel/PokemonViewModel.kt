@@ -92,7 +92,7 @@ class PokemonViewModel @Inject constructor(
         return@withContext primaryColors.map { it.rgb.toComposeColor() }
     }
 
-    fun Int.toComposeColor(): Color {
+    private fun Int.toComposeColor(): Color {
         return Color(android.graphics.Color.rgb(this shr 16 and 0xFF, this shr 8 and 0xFF, this and 0xFF))
     }
 }
