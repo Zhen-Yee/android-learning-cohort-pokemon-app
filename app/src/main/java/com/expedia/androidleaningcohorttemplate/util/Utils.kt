@@ -33,3 +33,7 @@ fun String.capitalize(): String {
             it.toString()
     }
 }
+
+fun String.formatOrderId(): String {
+    return String.format("%04d", this.toInt())
+}
