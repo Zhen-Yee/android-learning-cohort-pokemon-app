@@ -15,7 +15,7 @@ class PokemonService @Inject constructor(
 ) {
     suspend fun getPokemons(limit: Int? = DEFAULT_LIMIT, offset: Int? = DEFAULT_OFFSET): PokemonDTO? {
         return try {
-            val response = pokemonAPI.getPokemons(limit, offset).execute().body()
+            val response = pokemonAPI.getPokemons(limit, offset).body()
             Log.d("PokemonService", Gson().toJson(response))
             response
         } catch (e: Exception) {
@@ -26,7 +26,7 @@ class PokemonService @Inject constructor(
 
     suspend fun getPokemonDetailsById(id: String): PokemonDetailsDTO? {
         return try {
-            val response = pokemonAPI.getPokemon(id).execute().body()
+            val response = pokemonAPI.getPokemon(id).body()
             Log.d("PokemonService", Gson().toJson(response))
             response
         } catch (e: Exception) {
