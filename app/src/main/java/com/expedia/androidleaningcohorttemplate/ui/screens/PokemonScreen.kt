@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,10 +14,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -24,6 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
@@ -61,6 +65,8 @@ fun PokemonScreen(
             .fillMaxSize()
     ) {
         val pokemons by remember { viewModel.pokemonList }
+//        Unused - Flow
+//        val pokemons by viewModel.pokemonListFlow.collectAsState(initial = emptyList())
         val isLoading by remember { viewModel.isLoading }
         val scrollState = rememberLazyListState()
 
@@ -84,7 +90,12 @@ fun PokemonScreen(
                         .align(CenterHorizontally)
                 )
 
-                Spacer(modifier = Modifier.height(20.dp))
+                Divider(
+                    color = Color.Black,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 20.dp)
+                )
 
                 if (isLoading) {
                     LoadingScreen()
@@ -103,7 +114,7 @@ fun PokemonScreen(
                                 pokemon = pokemon,
                                 navController = navController
                             )
-                            Spacer(modifier = Modifier.height(16.dp)) // Add spacing between cards
+                            Spacer(modifier = Modifier.height(16.dp))
                         }
                     }
                 }
@@ -122,7 +133,9 @@ fun PokemonCard(
 ) {
     Box(
         modifier = Modifier
-            .shadow(5.dp, RoundedCornerShape(50.dp))
+            .shadow(5.dp, RoundedCornerShape(25.dp))
+            .fillMaxWidth()
+            .height(75.dp)
             .clip(RoundedCornerShape(50.dp))
             .background(Color.White)
             .aspectRatio(1f)
@@ -131,35 +144,39 @@ fun PokemonCard(
                 navController.navigate("${PokemonScreens.PokemonDetailsScreen.name}/${pokemon.id}")
             }
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = CenterHorizontally
+        Row(
+            modifier = Modifier.fillMaxSize(),
+            verticalAlignment = CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
                 text = "#${pokemon.id.formatOrderId()}",
                 fontFamily = FontFamily.Serif,
-                textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.headlineSmall,
+                textAlign = TextAlign.End,
+                style = MaterialTheme.typography.labelMedium,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .padding(end = 45.dp)
+                    .width(60.dp)
             )
+
             Image(
                 painter = rememberAsyncImagePainter(model = pokemon.imageUrl),
                 contentDescription = pokemon.name,
                 modifier = Modifier
-                    .size(180.dp)
-                    .align(CenterHorizontally)
+                    .size(80.dp)
+                    .align(CenterVertically)
             )
+
             Text(
                 text = pokemon.name.capitalize(),
                 fontFamily = FontFamily.Serif,
-                textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.headlineSmall,
+                textAlign = TextAlign.Start,
+                style = MaterialTheme.typography.labelMedium,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 45.dp)
             )
         }
     }
